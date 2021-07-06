@@ -1,5 +1,4 @@
-require 'spec_helper'
-
+require 'set'
 require 'card'
 
 describe Card do
@@ -17,6 +16,44 @@ describe Card do
 
   it 'has a rank' do
     raise unless card(rank: 4).rank == 4
+  end
+
+  context 'equality' do
+    subject { card(suit: :spades, rank: 4) }
+
+    describe 'comparing against self' do
+      let(:other) { card(suit: :spades, rank: 4) }
+
+      it 'is equal' do
+        raise unless subject == other
+      end
+
+      it 'is hash equal' do
+        raise unless Set.new([subject, other]).size == 1
+      end
+    end
+
+    shared_examples_for 'an unequal card' do
+      it 'is not equal' do
+        raise unless subject != other
+      end
+
+      it 'is not hash equal' do
+        raise unless Set.new([subject, other]).size == 2
+      end
+    end
+
+    describe 'comparing to a card of different suit' do
+      let(:other) { card(suit: :hearts, rank: 4) }
+
+      it_behaves_like 'an unequal card'
+    end
+
+    describe 'comparing to a card of different rank' do
+      let(:other) { card(suit: :spades, rank: 5) }
+
+      it_behaves_like 'an unequal card'
+    end
   end
 
   describe 'a jack' do

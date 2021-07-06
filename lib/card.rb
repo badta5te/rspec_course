@@ -17,4 +17,15 @@ class Card
             end
   end
 
+  def ==(other)
+    rank == other.rank && suit == other.suit
+  end
+
+  def hash
+    [suit, rank].hash
+  end
+
+  def eql?(other)
+    self == other
+  end
 end
