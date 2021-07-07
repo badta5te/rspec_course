@@ -76,4 +76,10 @@ describe Card, :unit do
       expect(card(rank: :queen).rank).to be < card(rank: :king).rank
     end
   end
+
+  describe 'an ace' do
+    it 'ranks higher than a king' do
+      expect(card(rank: :king).rank).to be < card(rank: :ace).rank
+    end
+  end
 end
