@@ -46,6 +46,33 @@ class Card
     "#{id.upcase}#{s.fetch(suit)}"
   end
 
+  def to_json(*_args)
+    {
+      rank: rank,
+      suit: suit
+    }.to_json
+  end
+
+  def self.from_string(value)
+    short_suit = value[-1]
+
+    suit = {
+      'H' => :hearts,
+      'D' => :diamonds,
+      'S' => :spades,
+      'C' => :clubs
+    }.fetch(short_suit)
+
+    rank = {
+      'A' => :ace,
+      'K' => :king,
+      'Q' => :queen,
+      'J' => :jack
+    }.fetch(value[0]) { value[0..-2].to_i }
+
+    Card.build(suit, rank)
+  end
+
   def ==(other)
     rank == other.rank && suit == other.suit
   end

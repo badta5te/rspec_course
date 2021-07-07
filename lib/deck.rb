@@ -3,7 +3,7 @@
 require 'card'
 
 class Deck
-  RANKS = (6..9).to_a + %i[jack queen king ace]
+  RANKS = (7..10).to_a + %i[jack queen king ace]
 
   SUITS = %i[hearts clubs diamonds spades].freeze
 

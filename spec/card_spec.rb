@@ -82,4 +82,19 @@ describe Card, :unit do
       expect(card(rank: :king).rank).to be < card(rank: :ace).rank
     end
   end
+
+  describe '.from_string', :aggregate_failures do
+    def self.it_parses(string, card)
+      it "parses #{string}" do
+        expect(Card.from_string(string)).to eq(card)
+      end
+    end
+
+    it_parses '7H', Card.build(:hearts, 7)
+    it_parses '10S', Card.build(:spades, 10)
+    it_parses 'JC', Card.build(:clubs, :jack)
+    it_parses 'QC', Card.build(:clubs, :queen)
+    it_parses 'KC', Card.build(:clubs, :king)
+    it_parses 'AD', Card.build(:diamonds, :ace)
+  end
 end
